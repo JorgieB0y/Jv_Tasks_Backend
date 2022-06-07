@@ -71,7 +71,11 @@ io.on('connection', (socket) => {
     })
 
     socket.on('delete task', task => {
-        console.log(task)
+        // On delete task event we emit the task to all project connections
         socket.to(task.project).emit('deleted task', task)
+    })
+
+    socket.on('edit task', (task) => {
+        socket.to(task.project._id).emit('updated task', task)
     })
 })

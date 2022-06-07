@@ -286,9 +286,7 @@ const ProjectsProvider = ({children}) => {
 
       const {data} = await axiosClient.put(`/tasks/${task.id}`, task, config)
 
-      const updatedProject = {...project}
-      updatedProject.tasks = updatedProject.tasks.map(taskState => taskState._id === data._id ? data : taskState)
-      setProject(updatedProject)
+      socket.emit('edit task', data)
 
       setAlert({})
       setModalTaskForm(false)
@@ -500,6 +498,12 @@ const ProjectsProvider = ({children}) => {
     setTask({})
   }
 
+  const editedTaskUpdate = (task) => {
+    const updatedProject = {...project}
+    updatedProject.tasks = updatedProject.tasks.map(taskState => taskState._id === task._id ? task : taskState)
+    setProject(updatedProject)
+  }
+
   return (
     <ProjectsContext.Provider
       value={{
@@ -530,6 +534,7 @@ const ProjectsProvider = ({children}) => {
         handleSearch,
         submitTasksToProject,
         updatedDeletedTask,
+        editedTaskUpdate,
       }}
     >
       {children}

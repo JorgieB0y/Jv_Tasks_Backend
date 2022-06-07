@@ -20,7 +20,7 @@ const Project = () => {
   const params = useParams();
   const admin = useAdmin()
 
-  const { alert, loading, project, getProject, handleModalTaskForm, submitTasksToProject, updatedDeletedTask } = useProjects() 
+  const { alert, loading, project, getProject, handleModalTaskForm, submitTasksToProject, updatedDeletedTask, editedTaskUpdate } = useProjects() 
 
   const { name } = project;
 
@@ -46,6 +46,12 @@ const Project = () => {
     socket.on('deleted task', (deletedTask) => {
       if (deletedTask.project === project._id) {
         updatedDeletedTask(deletedTask)
+      }
+    })
+
+    socket.on('updated task', (updatedTask) => {
+      if (updatedTask.project._id === project._id) {
+        editedTaskUpdate(updatedTask)
       }
     })
   })
