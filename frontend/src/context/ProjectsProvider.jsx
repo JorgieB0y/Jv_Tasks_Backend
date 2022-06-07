@@ -32,35 +32,35 @@ const ProjectsProvider = ({children}) => {
   }
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const token = localStorage.getItem('token')
-
-        if (!token) {
-          return 
-        }
-
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}` 
-          }  
-        }
-
-        const { data } = await axiosClient.get('/projects', config)
-        setProjects(data)
-        
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
     fetchProjects();
   }, [])
 
   useEffect(() => {
     socket = io(import.meta.env.VITE_BACKEND_URL)
   }, [])
+
+  const fetchProjects = async () => {
+    try {
+      const token = localStorage.getItem('token')
+
+      if (!token) {
+        return 
+      }
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}` 
+        }  
+      }
+
+      const { data } = await axiosClient.get('/projects', config)
+      setProjects(data)
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const submitProject = async (project) => {
 
@@ -528,6 +528,7 @@ const ProjectsProvider = ({children}) => {
         task,
         collaborator,
         search,
+        fetchProjects,
         displayAlert,
         submitProject,
         getProject,

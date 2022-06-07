@@ -8,9 +8,13 @@ let socket;
 
 const Projects = () => {
 
-  const { projects, loading } = useProjects()
+  const { projects, loading, fetchProjects } = useProjects()
 
   if (loading) return <Spinner />
+
+  useEffect(() => {
+    fetchProjects()
+  }, [])
 
   return (
     <Fragment>
