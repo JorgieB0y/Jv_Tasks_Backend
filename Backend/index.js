@@ -62,6 +62,8 @@ io.on('connection', (socket) => {
     console.log('Connected to socket io')
 
     socket.on('open project', (project) => {
+        console.log(`Created room with project id:`, project)
+        // Join method created a new room with whatever arbitrary id we pass to it, in this case the project id
         socket.join(project);
     })
 
