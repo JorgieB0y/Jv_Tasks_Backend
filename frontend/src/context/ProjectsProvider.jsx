@@ -463,10 +463,7 @@ const ProjectsProvider = ({children}) => {
 
       const { data } = await axiosClient.post(`/tasks/status/${id}`, {}, config)
 
-      const updatedProject = { ...project }
-      updatedProject.tasks = updatedProject.tasks.map(stateTask => stateTask._id === data._id ? data : stateTask)
-      setProject(updatedProject)
-      setTask({})
+      socket.emit('complete task', data)
 
     } catch (error) {
       console.log(error)
@@ -504,6 +501,13 @@ const ProjectsProvider = ({children}) => {
     setProject(updatedProject)
   }
 
+  const updatedCompletedTask = (task) => {
+    const updatedProject = { ...project }
+    updatedProject.tasks = updatedProject.tasks.map(stateTask => stateTask._id === task._id ? task : stateTask)
+    setProject(updatedProject)
+    setTask({})
+  }
+
   return (
     <ProjectsContext.Provider
       value={{
@@ -535,6 +539,7 @@ const ProjectsProvider = ({children}) => {
         submitTasksToProject,
         updatedDeletedTask,
         editedTaskUpdate,
+        updatedCompletedTask,
       }}
     >
       {children}

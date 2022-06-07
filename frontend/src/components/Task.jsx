@@ -1,13 +1,15 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { dateFormatter } from '../helpers/dateFormatter.jsx'
 import useProjects from '../hooks/useProjects.jsx';
 import useAdmin from '../hooks/useAdmin.jsx';
 
+let socket;
+
 const Task = ({task}) => {
 
-    const {name, description, dueDate, priority, status, _id, completedBy} = task;
+    const { name, description, dueDate, priority, status, _id, completedBy } = task;
 
-    const { handleModalEditTaskForm, handleDeleteModalTaskForm, completeTask } = useProjects();
+    const { handleModalEditTaskForm, handleDeleteModalTaskForm, completeTask, updatedCompletedTask } = useProjects();
     const admin = useAdmin();
 
   return (

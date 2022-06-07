@@ -78,4 +78,9 @@ io.on('connection', (socket) => {
     socket.on('edit task', (task) => {
         socket.to(task.project._id).emit('updated task', task)
     })
+
+    socket.on('complete task', (task) => {
+        // When marked as compelte we emit an event to all project member with the completed task event
+        socket.to(task.project._id).emit('completed task', task)
+    })
 })

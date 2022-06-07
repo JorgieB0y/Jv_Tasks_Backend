@@ -20,7 +20,7 @@ const Project = () => {
   const params = useParams();
   const admin = useAdmin()
 
-  const { alert, loading, project, getProject, handleModalTaskForm, submitTasksToProject, updatedDeletedTask, editedTaskUpdate } = useProjects() 
+  const { alert, loading, project, getProject, handleModalTaskForm, submitTasksToProject, updatedDeletedTask, editedTaskUpdate, updatedCompletedTask } = useProjects() 
 
   const { name } = project;
 
@@ -54,6 +54,12 @@ const Project = () => {
         editedTaskUpdate(updatedTask)
       }
     })
+
+    socket.on('completed task', (task) => {
+      if (task.project._id === project._id) {
+          updatedCompletedTask(task)
+      }
+  })
   })
   
   if (loading) return <Spinner />
