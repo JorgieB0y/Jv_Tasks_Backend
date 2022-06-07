@@ -3,9 +3,6 @@ import useProjects from '../hooks/useProjects.jsx'
 import { ProjectPreview } from '../components/ProjectPreview'
 import Spinner from '../components/Spinner.jsx'
 
-// Socket io hook
-let socket;
-
 const Projects = () => {
 
   const { projects, loading, fetchProjects } = useProjects()
