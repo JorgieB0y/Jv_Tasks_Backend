@@ -2,10 +2,18 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Search from './Search'
 import useProjects from '../hooks/useProjects'
+import useAuth from '../hooks/useAuth'
 
 const Header = () => {
 
-    const { handleSearch } = useProjects();
+    const { handleSearch, projectsCloseSession } = useProjects();
+    const { authCloseSession } = useAuth();
+
+    const handleCloseSession = () => {
+        projectsCloseSession()
+        authCloseSession()
+        localStorage.removeItem('token')
+    }
 
   return (
     <header className='px-4 py-5 bg-white border-b'>
@@ -28,6 +36,7 @@ const Header = () => {
                 <button 
                     type='button' 
                     className='text-white text-sm bg-orange-main p-3 rounded-md uppercase font-bold'
+                    onClick={handleCloseSession}
                 > Sign Out </button>
 
                 <Search /> 

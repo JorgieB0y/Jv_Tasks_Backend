@@ -508,6 +508,13 @@ const ProjectsProvider = ({children}) => {
     setTask({})
   }
 
+  const projectsCloseSession = () => {
+    setProjects([])
+    setAlert({})
+    setProject({})
+    setTask({})
+  }
+
   return (
     <ProjectsContext.Provider
       value={{
@@ -540,6 +547,7 @@ const ProjectsProvider = ({children}) => {
         updatedDeletedTask,
         editedTaskUpdate,
         updatedCompletedTask,
+        projectsCloseSession,
       }}
     >
       {children}
