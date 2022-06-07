@@ -69,4 +69,9 @@ io.on('connection', (socket) => {
         // When a user is on the same project we emit the task to all socket connections
         socket.to(task.project).emit('created task', task)
     })
+
+    socket.on('delete task', task => {
+        console.log(task)
+        socket.to(task.project).emit('deleted task', task)
+    })
 })

@@ -42,8 +42,6 @@ const fetchProject = async (req, res) => {
     res.json(
         project
     )
-
-    console.log(project)
 }
 
 const createNewProject = async (req, res) => {

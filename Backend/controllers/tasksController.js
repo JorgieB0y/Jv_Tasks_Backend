@@ -102,7 +102,7 @@ const deleteTask = async (req, res) => {
         await fetchTask.deleteOne();
         // Succesful response from API
         res.json({ message: "Task was deleted 👍"})
-        console.log(`Project with id: ${id} was deleted`)
+        console.log(`Task with id: ${id} was deleted`)
     } catch (error) {
         console.log(error)
         res.status(403).json({ message: `Could not delete Task. Reason: ${error.message}`})

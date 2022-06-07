@@ -315,9 +315,7 @@ const ProjectsProvider = ({children}) => {
 
       const {data} = await axiosClient.delete(`/tasks/${task._id}`, config)
 
-      const updatedProject = {...project}
-      updatedProject.tasks = updatedProject.tasks.filter(localTask => localTask._id !== task._id)
-      setProject(updatedProject)
+      socket.emit('delete task', task)
 
       setAlert({
         error: false,
@@ -325,7 +323,7 @@ const ProjectsProvider = ({children}) => {
       })
 
       setDeleteModalTaskForm(false)
-      setTask({})
+    
       setTimeout(() => {
         setAlert({})
       }, 3000)
@@ -491,6 +489,17 @@ const ProjectsProvider = ({children}) => {
     setProject(updatedProject)
   }
 
+  const updatedDeletedTask = (task) => {
+    // Copy the current project
+    const updatedProject = {...project}
+    // Update the tasks to remove the selected task
+    updatedProject.tasks = updatedProject.tasks.filter(localTask => localTask._id !== task._id)
+    // Update the project state
+    setProject(updatedProject)
+    // Update the task state
+    setTask({})
+  }
+
   return (
     <ProjectsContext.Provider
       value={{
@@ -519,7 +528,8 @@ const ProjectsProvider = ({children}) => {
         deleteCollaborator,
         completeTask,
         handleSearch,
-        submitTasksToProject
+        submitTasksToProject,
+        updatedDeletedTask,
       }}
     >
       {children}
